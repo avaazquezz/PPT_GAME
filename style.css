@@ -278,33 +278,30 @@ body {
 
 /* Área de selección del jugador */
 #jugador {
-  margin-top: 30px;
-  padding: 20px;
-  background: var(--light-color);
-  border-radius: 12px;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 #jugador h3 {
-  text-align: center;
   margin-bottom: 20px;
-  color: var(--dark-color);
-  font-size: 1.4rem;
-  position: relative;
-  display: inline-block;
-  left: 50%;
-  transform: translateX(-50%);
+  position: static;
+  transform: none;
+  left: auto;
+  display: block;
+  width: 100%;
+  text-align: center;
 }
 
-#jugador h3::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
+/* Contenedor para los botones del jugador */
+.botones-jugador {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
   width: 100%;
-  height: 3px;
-  background: var(--tertiary-color);
-  border-radius: 3px;
+  padding: 10px 0;
 }
 
 /* Botones de selección estilizados con imágenes */
@@ -324,6 +321,7 @@ body {
   background-size: 65%;
   background-repeat: no-repeat;
   font-size: 0; /* Oculta el texto */
+  flex: 0 0 auto;
 }
 
 #piedra1 {
@@ -410,27 +408,28 @@ body {
 
 /* Paneles modales */
 #panelRondas, #panelMensaje, #panelAlerta {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background: rgba(0, 0, 0, 0.8);
   z-index: 1000;
   backdrop-filter: blur(5px);
 }
 
 #contenidoRondas, #mensajeContenido, #contenidoAlerta {
-  background: white;
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+  max-width: 90%;
+  width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: var(--shadow-medium);
   text-align: center;
-  max-width: 500px;
-  width: 90%;
+  background: white;
   animation: zoomIn 0.3s ease;
 }
 
@@ -459,15 +458,15 @@ body {
 }
 
 #panelRondas button, #panelMensaje button, #panelAlerta button {
-  padding: 12px 24px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  margin: 5px;
   border: none;
   border-radius: 8px;
   background: var(--primary-color);
   color: white;
-  font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  margin: 5px;
   transition: var(--transition-fast);
 }
 
@@ -530,54 +529,346 @@ body {
 
 /* Media queries para responsividad */
 @media (max-width: 768px) {
-  #titulo h1 {
-    font-size: 2.8rem;
+  body {
+    padding: 10px;
   }
-  
-  #marcadorRondas {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #marcadorRondas span {
-    width: 100%;
-    margin: 5px 0;
-  }
-  
-  #marcador {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  #marcador span {
-    width: 100%;
-    margin: 5px 0;
-  }
-  
-  #piedra1, #papel1, #tijera1 {
-    width: 90px;
-    height: 90px;
-  }
-}
 
-@media (max-width: 480px) {
   #titulo h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
     padding: 10px 15px;
+  }
+  
+  #instrucciones {
+    padding: 20px;
+    margin-bottom: 25px;
   }
   
   #instrucciones h2 {
     font-size: 1.8rem;
   }
   
+  #instrucciones ul {
+    padding-left: 10px;
+  }
+  
+  #instrucciones li {
+    padding: 6px 0 6px 25px;
+    font-size: 0.95rem;
+  }
+  
+  #marcadorRondas {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  #marcadorRondas span {
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+  
+  #marcador {
+    flex-direction: column;
+    align-items: center;
+    margin: 15px 0;
+    gap: 10px;
+  }
+  
+  #marcador span {
+    width: 100%;
+    margin: 3px 0;
+    padding: 10px 15px;
+    font-size: 1rem;
+    min-width: 0;
+  }
+  
+  #piedra1, #papel1, #tijera1 {
+    width: 90px;
+    height: 90px;
+    margin: 8px;
+  }
+  
+  #jugador, #maquina {
+    padding: 15px;
+    margin-top: 20px;
+  }
+  
+  #jugador h3, #maquina h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  #tablero {
+    padding: 15px;
+    gap: 15px; /* Reducir el espaciado entre secciones */
+  }
+
+  #marcadorRondas span,
+  #marcador span {
+    font-size: 0.9rem;
+    padding: 10px 15px;
+    min-width: 120px; /* Reducir el ancho mínimo */
+  }
+
+  #jugador button {
+    width: 70px;
+    height: 70px;
+    margin: 5px;
+    background-size: 50%;
+  }
+
+  #resultadoIA {
+    font-size: 1rem;
+    padding: 10px;
+  }
+  
+  #resultadoIA {
+    padding: 20px;
+    margin: 15px auto;
+    max-width: 250px;
+  }
+  
+  #eleccionIA {
+    font-size: 1.8rem;
+  }
+  
+  #panelRondas button, #panelMensaje button, #panelAlerta button {
+    padding: 10px 20px;
+    font-size: 1rem;
+  }
+
+  .botones-jugador {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding: 8px;
+  }
+  
+  #titulo {
+    padding: 15px 0;
+    margin-bottom: 20px;
+  }
+  
+  #titulo h1 {
+    font-size: 1.8rem;
+    padding: 8px 12px;
+  }
+  
+  #instrucciones {
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+  
+  #instrucciones h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+  
+  #instrucciones p, #instrucciones li {
+    font-size: 0.9rem;
+  }
+  
   #iniciar, #detener {
     width: 100%;
-    margin: 10px 0;
+    margin: 8px 0;
+    padding: 12px 15px;
+    font-size: 1rem;
+    min-width: 0;
+  }
+  
+  #piedra1, #papel1, #tijera1 {
+    width: 65px;
+    height: 65px;
+    margin: 5px;
+    background-size: 60%;
+  }
+  
+  #jugador, #maquina {
+    padding: 12px;
+    margin-top: 15px;
+  }
+  
+  #jugador h3, #maquina h3 {
+    font-size: 1.1rem;
+  }
+  
+  #resultadoIA {
+    padding: 15px;
+    margin: 12px auto;
+    max-width: 200px;
+  }
+  
+  #eleccionIA {
+    font-size: 1.5rem;
+  }
+  
+  #contenidoRondas, #mensajeContenido, #contenidoAlerta {
+    padding: 25px;
+    width: 85%;
+  }
+  
+  #panelRondas p, #panelMensaje p, #panelAlerta p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  #numeroRondas {
+    padding: 10px 15px;
+    font-size: 0.95rem;
+    width: 100%;
+    margin-bottom: 15px;
+    margin-right: 0;
+  }
+
+  #tablero {
+    padding: 10px;
+    gap: 10px; /* Reducir aún más el espaciado */
+  }
+
+  #marcadorRondas span,
+  #marcador span {
+    font-size: 0.8rem;
+    padding: 8px 10px;
+    min-width: 100px; /* Reducir el ancho mínimo */
+  }
+
+  #jugador button {
+    width: 60px;
+    height: 60px;
+    margin: 4px;
+    background-size: 45%;
+  }
+
+  #resultadoIA {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .botones-jugador {
+    gap: 8px;
+  }
+}
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 360px) {
+  #titulo h1 {
+    font-size: 1.6rem;
+  }
+  
+  #instrucciones h2 {
+    font-size: 1.3rem;
+  }
+  
+  #piedra1, #papel1, #tijera1 {
+    width: 55px;
+    height: 55px;
+    margin: 4px;
+  }
+  
+  #marcadorRondas span, #marcador span {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+  
+  #eleccionIA {
+    font-size: 1.3rem;
+  }
+  
+  #jugador h3, #maquina h3 {
+    font-size: 1rem;
+  }
+  
+  #contenidoRondas, #mensajeContenido, #contenidoAlerta {
+    padding: 20px;
+  }
+  
+  /* Forzar botones a estar bien distribuidos */
+  #jugador {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #jugador h3 {
+    margin-bottom: 10px;
+  }
+  
+  /* Alinear botones horizontalmente */
+  #jugador div {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .botones-jugador {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
   
   #piedra1, #papel1, #tijera1 {
     width: 70px;
     height: 70px;
-    margin: 5px;
+  }
+}
+
+/* Ajustes para garantizar que todos los elementos sean visibles sin scroll horizontal */
+@media (max-height: 700px) and (max-width: 480px) {
+  body {
+    padding: 5px;
+  }
+  
+  #instrucciones {
+    padding: 12px;
+    margin-bottom: 15px;
+  }
+  
+  #instrucciones ul {
+    margin: 10px 0;
+  }
+  
+  #instrucciones li {
+    padding: 4px 0 4px 20px;
+  }
+  
+  #marcadorRondas, #marcador {
+    gap: 5px;
+  }
+  
+  #tablero {
+    padding: 15px;
+  }
+  
+  #jugador, #maquina {
+    padding: 10px;
+    margin-top: 10px;
+  }
+  
+  #resultadoIA {
+    padding: 10px;
+    margin: 8px auto;
+  }
+}
+
+/* Ajuste para evitar que los botones se sobrepongan en pantallas muy pequeñas */
+@media (max-width: 320px) {
+  #piedra1, #papel1, #tijera1 {
+    width: 50px;
+    height: 50px;
+    margin: 3px;
+  }
+  
+  #jugador, #maquina {
+    padding: 8px;
+  }
+  
+  #jugador button {
+    display: inline-block;
   }
 }
