@@ -15,7 +15,7 @@ Puedes jugar directamente accediendo a través de este enlace:
 Este proyecto fue desarrollado **en mis ratos libres**, ¡y completado en tan solo un día!  
 Mi objetivo principal fue **demostrar mis conocimientos en JavaScript básico, HTML y CSS**, creando algo funcional, interactivo y entretenido que pudiera compartir con otros.
 
-En este juego web, podrás enfrentarte a la computadora en una partida de piedra, papel o tijera.  
+En este juego web, podrás enfrentarte a la IA en una partida de piedra, papel o tijera.  
 Haz tu elección y trata de vencer al azar de la máquina. ¡Buena suerte! 🍀
 
 ---
@@ -31,7 +31,7 @@ Haz tu elección y trata de vencer al azar de la máquina. ¡Buena suerte! 🍀
 ## 🎮 Cómo jugar
 
 1. Ve al enlace del juego 👉 [aquí](https://avaazquezz.github.io/PPT_GAME/).
-2. Selecciona tu elección entre **piedra**, **papel** o **tijera**.
+2. Inicia una partida y Selecciona tu elección entre **piedra**, **papel** o **tijera**.
 3. El resultado se mostrará inmediatamente y te indicará si has ganado, perdido o empatado.
 4. ¡Diviértete!
 
@@ -61,4 +61,8 @@ PPT_GAME/
 ├── index.html         # Archivo principal del proyecto
 ├── styles.css         # Archivo de estilos
 ├── script.js          # Archivo con la lógica del juego
-└── README.md          # Documentación del proyecto
+├── README.md          # Documentación del proyecto
+└── img/               # Carpeta de imágenes
+    ├── piedra.jpg     # Imagen para "Piedra"
+    ├── papel.png      # Imagen para "Papel"
+    └── tijera.png     # Imagen para "Tijera"
