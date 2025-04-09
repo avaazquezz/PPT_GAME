@@ -99,11 +99,15 @@ function determinarGanador(eleccJugador, eleccionIA) {
 }
 
 function eliminarJuego() {
+    // Reiniciar las variables globales
     puntosJugador = 0;
     puntosIA = 0;
     empates = 0;
-    rondasTotales = 0; 
-    rondasJugadas = 0; 
+    rondasTotales = 0;
+    rondasJugadas = 0;
+    rondasGanadasJugador = 0;
+    rondasGanadasIA = 0;
+    tiradasActuales = 0;
 
     // Reiniciar el contenido HTML
     const puntosJugadorElemento = document.getElementById('puntosJugador');
@@ -111,13 +115,17 @@ function eliminarJuego() {
     const empatesElemento = document.getElementById('empates');
     const eleccionIAElemento = document.getElementById('eleccionIA');
     const rondasJugadasTotalesElemento = document.getElementById('rondasJugadasTotales');
+    const rondasGanadasJugadorElemento = document.getElementById('rondasGanadasJugador');
+    const rondasGanadasIAElemento = document.getElementById('rondasGanadasIA');
     const tiempoElemento = document.getElementById('tiempo');
 
-    if (puntosJugadorElemento) puntosJugadorElemento.textContent = 'Tus Puntos:';
-    if (puntosIAElemento) puntosIAElemento.textContent = 'Puntos IA:';
-    if (empatesElemento) empatesElemento.textContent = 'Empates:';
+    if (puntosJugadorElemento) puntosJugadorElemento.textContent = 'Tus Puntos: ';
+    if (puntosIAElemento) puntosIAElemento.textContent = 'Puntos IA: ';
+    if (empatesElemento) empatesElemento.textContent = 'Empates: ';
     if (eleccionIAElemento) eleccionIAElemento.textContent = '';
-    if (rondasJugadasTotalesElemento) rondasJugadasTotalesElemento.textContent = 'Rondas Jugadas: 0/0';
+    if (rondasJugadasTotalesElemento) rondasJugadasTotalesElemento.textContent = 'Rondas Jugadas: ';
+    if (rondasGanadasJugadorElemento) rondasGanadasJugadorElemento.textContent = 'Rondas Ganadas (Jugador): ';
+    if (rondasGanadasIAElemento) rondasGanadasIAElemento.textContent = 'Rondas Ganadas (IA): ';
     if (tiempoElemento) tiempoElemento.textContent = '';
 
     // Detener el contador de tiempo si está activo
