@@ -1,67 +1,60 @@
-let puntosJugador = 0;
-let puntosIA = 0;
-let empates = 0;
-let rondasTotales = 0;
-let rondasJugadas = 0;
-let rondasGanadasJugador = 0;
-let rondasGanadasIA = 0;
-let juegoIniciado = false;
-let tiradasActuales = 0;
+// Variables globales para gestionar el estado del juego
+let puntosJugador = 0; // Puntos acumulados por el jugador en la ronda actual
+let puntosIA = 0; // Puntos acumulados por la IA en la ronda actual
+let empates = 0; // Número de empates en la partida
+let rondasTotales = 0; // Número total de rondas seleccionadas por el usuario
+let rondasJugadas = 0; // Número de rondas jugadas hasta el momento
+let rondasGanadasJugador = 0; // Número de rondas ganadas por el jugador
+let rondasGanadasIA = 0; // Número de rondas ganadas por la IA
+let juegoIniciado = false; // Estado del juego (true si está en curso)
+let tiradasActuales = 0; // Número de tiradas realizadas en la ronda actual
 
+/**
+ * Gestiona la elección del jugador y determina el resultado de la tirada.
+ * @param {string} eleccJugador - La elección del jugador ('piedra', 'papel' o 'tijera').
+ */
 function eleccJugador(eleccJugador) {
     if (!juegoIniciado) {
         mostrarPanelAlerta('Debe iniciar una partida antes de seleccionar una opción.');
         return;
     }
 
-    // Opciones posibles
     const opciones = ['piedra', 'papel', 'tijera'];
     const eleccionIA = opciones[Math.floor(Math.random() * opciones.length)];
 
-    // Mostrar elección de la IA
     const eleccionIAElemento = document.getElementById('eleccionIA');
     eleccionIAElemento.textContent = `${eleccionIA}`;
 
-    // Determinar el ganador de la tirada
     const resultado = determinarGanador(eleccJugador, eleccionIA);
 
-    // Solo incrementar tiradas si no es empate
     if (resultado !== 'Es un empate!') {
         tiradasActuales++;
     }
 
-    // Actualizar el marcador de tiradas
     actualizarMarcadorTiradas();
 
-    // Verificar si se han hecho 4 tiradas y están empatados
     if (tiradasActuales === 4 && puntosJugador === puntosIA) {
         mostrarPanelAlerta('¡Empate en la ronda! La siguiente tirada será decisiva.');
-        return; // Detener aquí para esperar la tirada decisiva
+        return;
     }
 
-    // Verificar si se han completado las 5 tiradas de la ronda
     if (tiradasActuales === 5) {
-        // Determinar quién ganó la ronda
         if (puntosJugador > puntosIA) {
             rondasGanadasJugador++;
         } else if (puntosIA > puntosJugador) {
             rondasGanadasIA++;
         }
 
-        // Actualizar el marcador de rondas
         rondasJugadas++;
         actualizarMarcadorRondas();
 
-        // Reiniciar los contadores de tiradas y puntos
         reiniciarPuntos();
         tiradasActuales = 0;
 
-        // Verificar si se han jugado todas las rondas
         if (rondasJugadas == rondasTotales) {
             if (rondasGanadasJugador === rondasGanadasIA) {
-                // Mostrar panel de ronda de desempate
                 mostrarPanelAlerta('¡Empate en las rondas! Se jugará una ronda de desempate al mejor de 5.');
-                rondasTotales++; // Agregar una ronda adicional
+                rondasTotales++;
                 actualizarMarcadorDesempate('Ronda de desempate');
             } else {
                 finalizarJuego();
@@ -72,9 +65,14 @@ function eleccJugador(eleccJugador) {
     }
 }
 
+/**
+ * Determina el ganador de una tirada entre el jugador y la IA.
+ * @param {string} eleccJugador - Elección del jugador.
+ * @param {string} eleccionIA - Elección de la IA.
+ * @returns {string} - Resultado de la tirada ('¡Ganaste!', '¡Perdiste!' o 'Es un empate!').
+ */
 function determinarGanador(eleccJugador, eleccionIA) {
     if (eleccJugador === eleccionIA) {
-        // Si ambos eligen lo mismo, es empate
         const empatesElemento = document.getElementById('empates');
         empates++;
         empatesElemento.textContent = `Empates: ${empates}`;
@@ -84,13 +82,11 @@ function determinarGanador(eleccJugador, eleccionIA) {
         (eleccJugador === 'papel' && eleccionIA === 'piedra') ||
         (eleccJugador === 'tijera' && eleccionIA === 'papel')
     ) {
-        // Incrementar puntos del jugador
         puntosJugador++;
         const puntosJugadorElemento = document.getElementById('puntosJugador');
         puntosJugadorElemento.textContent = `Tus Puntos: ${puntosJugador}`;
         return '¡Ganaste!';
     } else {
-        // Incrementar puntos de la IA
         puntosIA++;
         const puntosIAElemento = document.getElementById('puntosIA');
         puntosIAElemento.textContent = `Puntos IA: ${puntosIA}`;
@@ -98,8 +94,10 @@ function determinarGanador(eleccJugador, eleccionIA) {
     }
 }
 
+/**
+ * Reinicia el estado del juego y actualiza los elementos del DOM.
+ */
 function eliminarJuego() {
-    // Reiniciar las variables globales
     puntosJugador = 0;
     puntosIA = 0;
     empates = 0;
@@ -109,7 +107,6 @@ function eliminarJuego() {
     rondasGanadasIA = 0;
     tiradasActuales = 0;
 
-    // Reiniciar el contenido HTML
     const puntosJugadorElemento = document.getElementById('puntosJugador');
     const puntosIAElemento = document.getElementById('puntosIA');
     const empatesElemento = document.getElementById('empates');
@@ -128,35 +125,34 @@ function eliminarJuego() {
     if (rondasGanadasIAElemento) rondasGanadasIAElemento.textContent = 'Rondas Ganadas (IA): ';
     if (tiempoElemento) tiempoElemento.textContent = '';
 
-    // Detener el contador de tiempo si está activo
     if (tiempoElemento && tiempoElemento.dataset.intervaloId) {
         clearInterval(tiempoElemento.dataset.intervaloId);
         delete tiempoElemento.dataset.intervaloId;
     }
 
-    // Ocultar el panel de detener juego
     const panelDetener = document.getElementById('panelMensaje');
     if (panelDetener) panelDetener.style.display = 'none';
 
-    // Mostrar el panel de partida eliminada
     mostrarPanelAlerta('¡La partida ha sido eliminada! Puedes iniciar una nueva partida más tarde.');
-
-    // Cambiar el estado del juego a no iniciado
     juegoIniciado = false;
 }
 
+/**
+ * Inicia una nueva partida mostrando el panel de selección de rondas.
+ */
 function iniciarJuego() {
-
     if (juegoIniciado) {
         mostrarPanelAlerta('Ya hay una partida en curso. Por favor, termina o elimina la partida actual antes de iniciar una nueva.');
         return;
     }
 
-    // Mostrar el panel para seleccionar el número de rondas
     const panelRondas = document.getElementById('panelRondas');
     panelRondas.style.display = 'flex';
 }
 
+/**
+ * Confirma el número de rondas seleccionadas y comienza el juego.
+ */
 function confirmarRondas() {
     const selectRondas = document.getElementById('numeroRondas');
     rondasTotales = parseInt(selectRondas.value);
@@ -164,16 +160,13 @@ function confirmarRondas() {
     rondasGanadasJugador = 0;
     rondasGanadasIA = 0;
 
-    // Actualizar el marcador de rondas
     actualizarMarcadorRondas();
 
     const panelRondas = document.getElementById('panelRondas');
     panelRondas.style.display = 'none';
 
-
     mostrarPanelAlerta(`¡El juego ha comenzado! Jugarás ${rondasTotales} rondas.`);
 
-    // Iniciar el contador de tiempo
     const tiempoElemento = document.getElementById('tiempo');
     let tiempo = 0;
 
@@ -188,10 +181,12 @@ function confirmarRondas() {
 
     tiempoElemento.dataset.intervaloId = intervaloTiempo;
 
-    // Cambiar el estado del juego a iniciado
     juegoIniciado = true;
 }
 
+/**
+ * Detiene el juego actual y muestra el panel de pausa.
+ */
 function detenerJuego() {
     if (!juegoIniciado) {
         mostrarPanelAlerta('Debe haber una partida iniciada para detener el juego.');
@@ -200,22 +195,22 @@ function detenerJuego() {
 
     const tiempoElemento = document.getElementById('tiempo');
 
-    // Detener el contador de tiempo si está activo
     if (tiempoElemento.dataset.intervaloId) {
         clearInterval(tiempoElemento.dataset.intervaloId);
         delete tiempoElemento.dataset.intervaloId;
     }
 
-    // Mostrar el panel de mensaje en el HTML
     const panel = document.getElementById('panelMensaje');
     panel.style.display = 'flex';
 }
 
+/**
+ * Continúa el juego después de haber sido detenido.
+ */
 function continuarJuego() {
     const panel = document.getElementById('panelMensaje');
     panel.style.display = 'none';
 
-    // Reanudar el contador de tiempo
     const tiempoElemento = document.getElementById('tiempo');
     let tiempo = parseInt(tiempoElemento.textContent.replace(' ', '').replace('s', '').trim());
 
@@ -230,7 +225,10 @@ function continuarJuego() {
     tiempoElemento.dataset.intervaloId = intervaloTiempo;
 }
 
-// Función para mostrar el panel con un mensaje
+/**
+ * Muestra un panel con un mensaje personalizado.
+ * @param {string} mensaje - Mensaje a mostrar en el panel.
+ */
 function mostrarPanelAlerta(mensaje) {
     const panel = document.getElementById('panelAlerta');
     const mensajeElemento = document.getElementById('mensajeAlerta');
@@ -238,12 +236,17 @@ function mostrarPanelAlerta(mensaje) {
     panel.style.display = 'flex';
 }
 
-// Función para cerrar el panel
+/**
+ * Cierra el panel de alerta.
+ */
 function cerrarPanelAlerta() {
     const panel = document.getElementById('panelAlerta');
     panel.style.display = 'none';
 }
 
+/**
+ * Actualiza el marcador de rondas en el DOM.
+ */
 function actualizarMarcadorRondas() {
     const rondasGanadasJugadorElemento = document.getElementById('rondasGanadasJugador');
     const rondasJugadasTotalesElemento = document.getElementById('rondasJugadasTotales');
@@ -254,11 +257,18 @@ function actualizarMarcadorRondas() {
     rondasGanadasIAElemento.textContent = `Rondas Ganadas (IA): ${rondasGanadasIA}`;
 }
 
+/**
+ * Actualiza el marcador de desempate en el DOM.
+ * @param {string} texto - Texto a mostrar en el marcador.
+ */
 function actualizarMarcadorDesempate(texto) {
     const rondasJugadasTotalesElemento = document.getElementById('rondasJugadasTotales');
     rondasJugadasTotalesElemento.textContent = texto;
 }
 
+/**
+ * Finaliza el juego y muestra el resultado final.
+ */
 function finalizarJuego() {
     let mensajeFinal = '¡El juego ha terminado! ';
 
@@ -272,20 +282,20 @@ function finalizarJuego() {
 
     mostrarPanelAlerta(mensajeFinal);
 
-    // Reiniciar los valores de puntos
     reiniciarPuntos();
 
-    // Detener el contador de tiempo
     const tiempoElemento = document.getElementById('tiempo');
     if (tiempoElemento && tiempoElemento.dataset.intervaloId) {
         clearInterval(tiempoElemento.dataset.intervaloId);
         delete tiempoElemento.dataset.intervaloId;
     }
 
-    // Reiniciar el estado del juego
     juegoIniciado = false;
 }
 
+/**
+ * Actualiza el marcador de tiradas en el DOM.
+ */
 function actualizarMarcadorTiradas() {
     const puntosJugadorElemento = document.getElementById('puntosJugador');
     const puntosIAElemento = document.getElementById('puntosIA');
@@ -296,6 +306,9 @@ function actualizarMarcadorTiradas() {
     empatesElemento.textContent = `Empates: ${empates}`;
 }
 
+/**
+ * Reinicia los puntos de la ronda actual.
+ */
 function reiniciarPuntos() {
     puntosJugador = 0;
     puntosIA = 0;

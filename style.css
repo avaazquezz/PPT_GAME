@@ -297,18 +297,21 @@ body {
 /* Contenedor para los botones del jugador */
 .botones-jugador {
   display: flex;
-  justify-content: center;
-  gap: 15px;
+  justify-content: center; /* Asegura centrado horizontal */
+  align-items: center;
+  gap: 20px; /* Espaciado consistente entre botones */
   flex-wrap: wrap;
   width: 100%;
-  padding: 10px 0;
+  padding: 15px 0;
+  margin: 0 auto; /* Margen automático horizontal */
+  max-width: 600px; /* Limita el ancho para control adicional */
 }
 
 /* Botones de selección estilizados con imágenes */
 #piedra1, #papel1, #tijera1 {
   width: 120px;
   height: 120px;
-  margin: 10px;
+  margin: 5px; /* Margen equilibrado */
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -321,7 +324,7 @@ body {
   background-size: 65%;
   background-repeat: no-repeat;
   font-size: 0; /* Oculta el texto */
-  flex: 0 0 auto;
+  flex: 0 0 auto; /* Evita que los botones se estiren */
 }
 
 #piedra1 {
@@ -870,5 +873,22 @@ body {
   
   #jugador button {
     display: inline-block;
+  }
+}
+
+/* Para pantallas de escritorio más grandes */
+@media (min-width: 1024px) {
+  .botones-jugador {
+    justify-content: center;
+    gap: 30px; /* Mayor espaciado en pantallas grandes */
+  }
+  
+  #piedra1, #papel1, #tijera1 {
+    margin: 10px; /* Mayor margen en pantallas grandes */
+  }
+  
+  #jugador {
+    align-items: center;
+    width: 100%; /* Asegura que ocupe todo el ancho disponible */
   }
 }
