@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piedra Papel Tijera | Duelo Definitivo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body id="body">
+    <div class="container">
+        <div id="titulo">
+            <h1>PIEDRA PAPEL TIJERA</h1>
+        </div>
+
+        <div id="instrucciones">
+            <h2><i class="fas fa-scroll"></i> Instrucciones</h2>
+            <p>¡Bienvenido al duelo definitivo de Piedra, Papel, Tijera! Domina las reglas del juego:</p>
+            <ul>
+                <li><i class="fas fa-hand-rock"></i> Piedra aplasta Tijera</li>
+                <li><i class="fas fa-hand-scissors"></i> Tijera corta Papel</li>
+                <li><i class="fas fa-hand-paper"></i> Papel cubre Piedra</li>
+                <li>Si ambos jugadores eligen la misma opción, es un empate</li>
+                <li>En cada ronda hay 5 puntos a repartir... el jugador con más puntos gana la Ronda</li>
+                <li>El que más Rondas gane, se lleva el Juego</li>
+                <li>Si hay empate en Rondas, se jugará una Ronda adicional</li>
+            </ul>
+
+            <p><b>¿Podrás superar a la IA en este duelo de estrategia?</b></p>
+            <p><b>¡Buena suerte (la necesitarás) y que gane el mejor estratega!</b></p>
+        </div>
+
+        <div class="btn-container">
+            <button id="iniciar" onclick="iniciarJuego()"><i class="fas fa-play"></i> Iniciar Juego</button>
+            <button id="detener" onclick="detenerJuego()"><i class="fas fa-stop"></i> Detener Juego</button>  
+        </div>
+
+        <div id="tablero">
+            <div id="marcadorRondas">
+                <span id="rondasGanadasJugador"><i class="fas fa-user"></i> Rondas Ganadas (Jugador): 0</span>
+                <span id="rondasJugadasTotales"><i class="fas fa-gamepad"></i> Rondas Jugadas: 0/0</span>
+                <span id="rondasGanadasIA"><i class="fas fa-robot"></i> Rondas Ganadas (IA): 0</span>
+            </div>
+
+            <div class="eleccion-container">
+                <div class="eleccion-jugador">
+                    <div class="eleccion-titulo">Tu elección</div>
+                    <div class="opciones">
+                        <div class="opcion" onclick="eleccJugador('piedra')">
+                            <img src="img/piedra.png" alt="Piedra">
+                        </div>
+                        <div class="opcion" onclick="eleccJugador('papel')">
+                            <img src="img/papel.png" alt="Papel">
+                        </div>
+                        <div class="opcion" onclick="eleccJugador('tijera')">
+                            <img src="img/tijera.png" alt="Tijera">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="eleccion-ia">
+                    <div class="eleccion-titulo">Elección de la IA</div>
+                    <div class="eleccion-display" id="eleccionIA">
+                        Esperando...
+                    </div>
+                </div>
+            </div>
+
+            <div class="resultado" id="resultado">
+                ¡Haz tu elección!
+            </div>
+
+            <div id="marcador">
+                <span id="puntosJugador"><i class="fas fa-user"></i> Tus Puntos: 0</span>
+                <span id="empates"><i class="fas fa-handshake"></i> Empates: 0</span>
+                <span id="puntosIA"><i class="fas fa-robot"></i> Puntos IA: 0</span>
+                <span id="tiempo"><i class="fas fa-clock"></i> 0s</span>
+            </div>
+        </div>
+        
+        <button id="reiniciar" onclick="eliminarJuego()"><i class="fas fa-redo"></i> Reiniciar Juego</button>
+    </div>
+
+    <!-- Panel para selección de rondas -->
+    <div class="panel" id="panelRondas">
+        <div class="panel-contenido">
+            <h2>¿Cuántas rondas quieres jugar?</h2>
+            <select id="numeroRondas">
+                <option value="1">1 Ronda</option>
+                <option value="3" selected>3 Rondas</option>
+                <option value="5">5 Rondas</option>
+                <option value="7">7 Rondas</option>
+            </select>
+            <button onclick="confirmarRondas()">Confirmar</button>
+        </div>
+    </div>
+
+    <!-- Panel para mensajes de alerta -->
+    <div class="panel" id="panelAlerta">
+        <div class="panel-contenido">
+            <p id="mensajeAlerta">Mensaje de alerta</p>
+            <button onclick="cerrarPanelAlerta()">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- Panel para detener juego -->
+    <div class="panel" id="panelMensaje">
+        <div class="panel-contenido">
+            <h2>¿Estás seguro?</h2>
+            <p id="mensajePanel">¿Quieres detener la partida actual? Todo el progreso se perderá.</p>
+            <button id="botonConfirmar" onclick="confirmarDetener()">Confirmar</button>
+            <button onclick="ocultarPanel()">Cancelar</button>
+        </div>
+    </div>
+
+    <script src="logica.js"></script>
+</body>
+</html>
